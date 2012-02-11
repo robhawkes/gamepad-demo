@@ -100,6 +100,7 @@ controllerChangePS3.addEventListener("click", onSelectPS3);
 
 // Run when xBox controller is selected
 function onSelectXbox(e) {
+	e.preventDefault();
 	controllerType = CONTROLLER_TYPES.XBOX;
 
 	controllerPS3.style.display = "none";
@@ -108,6 +109,7 @@ function onSelectXbox(e) {
 
 // Run when PS3 controller is selected
 function onSelectPS3(e) {
+	e.preventDefault();
 	controllerType = CONTROLLER_TYPES.PS3;
 
 	controllerXbox.style.display = "none";
