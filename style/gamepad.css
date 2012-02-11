@@ -1,9 +1,15 @@
 body {
 	background: #eee;
+	padding-top: 60px;
+}
+
+hr {
+	border-top-color: #ddd;
+	border-bottom-color: #eee;
 }
 
 .controller {
-	
+	background-color: #ddd;
 }
 
 	.controller li {
@@ -14,7 +20,7 @@ body {
 	background: url("controllers/xbox.svg") no-repeat;
 	background-size: contain;
 	height: 462px;
-	margin: 50px auto;
+	margin: 0 auto;
 	position: relative;
 	width: 670px;
 }
@@ -197,12 +203,12 @@ body {
 #ps3Controller {
 	background: url("controllers/ps3.svg") no-repeat;
 	background-size: contain;
+	display: none;
 	height: 418px;
-	margin: 50px auto;
+	margin: 0 auto;
 	position: relative;
 	width: 670px;
 }
-
 
 	#ps3Controller .stick {
 		

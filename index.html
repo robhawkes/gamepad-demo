@@ -3,58 +3,113 @@
 <html lang="en">
 
 	<head>
-		<title>Gamepad API</title>
+		<title>Gamepad API Demo</title>
 		<meta charset="utf-8">
 		
-		<link rel="stylesheet" href="style/reset.css">
+		<link rel="stylesheet" href="style/bootstrap.min.css">
 		<link rel="stylesheet" href="style/gamepad.css">
 	</head>
 	
 	<body>
-		<ul id="xboxController" class="controller">
-			<li id="leftStick" class="stick"><span></span></li>
-			<li id="rightStick" class="stick"><span></span></li>
-			<li id="backButton" class="button"></li>
-			<li id="xboxButton" class="button"></li>
-			<li id="startButton" class="button"></li>
-			<ul id="dpad">
-				<li id="dpadUp" class="button"></li>
-				<li id="dpadDown" class="button"></li>
-				<li id="dpadLeft" class="button"></li>
-				<li id="dpadRight" class="button"></li>
-			</ul>
-			<ul id="letterButtons">
-				<li id="aButton" class="button">A</li>
-				<li id="bButton" class="button">B</li>
-				<li id="xButton" class="button">X</li>
-				<li id="yButton" class="button">Y</li>
-			</ul>
-			<li id="lbButton" class="button"></li>
-			<li id="rbButton" class="button"></li>
-		</ul>
-		<script src="js/gamepad-xbox.js"></script>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="http://robhawkes.github.com/gamepad-demo">Gamepad API Demo</a>
+					<ul class="nav pull-right">
+						<li class="dropdown" id="select-gamepad">
+							<a href="#select-gamepad" class="dropdown-toggle" data-toggle="dropdown">
+								Select gamepad
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#" id="select-xbox">xBox 360</a></li>
+								<li><a href="#" id="select-ps3">PS3</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
-		<!--<ul id="ps3Controller" class="controller">
-			<li id="leftStick" class="stick"><span></span></li>
-			<li id="rightStick" class="stick"><span></span></li>
-			<li id="selectButton" class="button"></li>
-			<li id="psButton" class="button"></li>
-			<li id="startButton" class="button"></li>
-			<ul id="dpad">
-				<li id="dpadUp" class="button"></li>
-				<li id="dpadDown" class="button"></li>
-				<li id="dpadLeft" class="button horizontal"></li>
-				<li id="dpadRight" class="button horizontal"></li>
-			</ul>
-			<ul id="shapeButtons">
-				<li id="crossButton" class="button">Cross</li>
-				<li id="circleButton" class="button">Circle</li>
-				<li id="squareButton" class="button">Square</li>
-				<li id="triangleButton" class="button">Triangle</li>
-			</ul>
-			<li id="lb1Button" class="button"></li>
-			<li id="rb1Button" class="button"></li>
-		</ul>
-		<script src="js/gamepad-ps3.js"></script>-->
+		<div class="container">
+			<section class="controller hero-unit">
+				<ul id="xboxController">
+					<li id="leftStick" class="stick"><span></span></li>
+					<li id="rightStick" class="stick"><span></span></li>
+					<li id="backButton" class="button"></li>
+					<li id="xboxButton" class="button"></li>
+					<li id="startButton" class="button"></li>
+					<ul id="dpad">
+						<li id="dpadUp" class="button"></li>
+						<li id="dpadDown" class="button"></li>
+						<li id="dpadLeft" class="button"></li>
+						<li id="dpadRight" class="button"></li>
+					</ul>
+					<ul id="letterButtons">
+						<li id="aButton" class="button">A</li>
+						<li id="bButton" class="button">B</li>
+						<li id="xButton" class="button">X</li>
+						<li id="yButton" class="button">Y</li>
+					</ul>
+					<li id="lbButton" class="button"></li>
+					<li id="rbButton" class="button"></li>
+				</ul>
+
+				<ul id="ps3Controller">
+					<li id="leftStick" class="stick"><span></span></li>
+					<li id="rightStick" class="stick"><span></span></li>
+					<li id="selectButton" class="button"></li>
+					<li id="psButton" class="button"></li>
+					<li id="startButton" class="button"></li>
+					<ul id="dpad">
+						<li id="dpadUp" class="button"></li>
+						<li id="dpadDown" class="button"></li>
+						<li id="dpadLeft" class="button horizontal"></li>
+						<li id="dpadRight" class="button horizontal"></li>
+					</ul>
+					<ul id="shapeButtons">
+						<li id="crossButton" class="button">Cross</li>
+						<li id="circleButton" class="button">Circle</li>
+						<li id="squareButton" class="button">Square</li>
+						<li id="triangleButton" class="button">Triangle</li>
+					</ul>
+					<li id="lb1Button" class="button"></li>
+					<li id="rb1Button" class="button"></li>
+				</ul>
+			</section>
+
+			<hr>
+
+			<div class="row">
+				<section class="span4">
+					<h2>About</h2>
+					<p>This demo has been created as a visual representation of the <a href="https://wiki.mozilla.org/GamepadAPI">JavaScript Gamepad API</a> that has been introduced to both Firefox and Chrome. Right now the demo requires a <a href="http://hacks.mozilla.org/2011/12/paving-the-way-for-open-games-on-the-web-with-the-gamepad-and-mouse-lock-apis/">special build of Firefox Nightly</a> to work. Chrome support will be added soon.</p>
+
+					<p><a href="http://rawkes.com">Rob Hawkes</a> is the author of this demo. He is a Technical Evangelist at <a href="https://developer.mozilla.org">Mozilla</a> who focusses on game development on the Web.</p>
+					<p><a href="https://twitter.com/robhawkes" class="twitter-follow-button" data-show-count="false">Follow @robhawkes</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></p>
+				</section>
+				<section class="span4">
+					<h2>Known issues</h2>
+					<p>There are a few bugs and aspects of this demo that are known not to work:</p>
+					<ul>
+						<li>Requires a custom build of Firefox</li>
+						<li>No support for Chrome</li>
+						<li>Only works with xBox 360 and PS3 gamepads</li>
+					<ul>
+				</section>
+				<section class="span4">
+					<h2>Download</h2>
+					<p>You can <a href="https://github.com/robhawkes/gamepad-demo">download the source code</a> on GitHub. Feel free to modify it and please send a pull request if you make any substantial changes that should be implemented here.</a>
+				</section>
+			</div> <!--/row-->
+		<div> <!--/container-->
+
+		<!-- GitHub banner-->
+		<a href="https://github.com/robhawkes/gamepad-demo"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 9999" src="https://a248.e.akamai.net/assets.github.com/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork this on GitHub"></a>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/gamepad.js"></script>
 	</body>
 </html>
