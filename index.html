@@ -15,66 +15,60 @@
 			<div class="navbar-inner">
 				<div class="container">
 					<a class="brand" href="http://robhawkes.github.com/gamepad-demo">Gamepad API Demo</a>
-					<ul class="nav pull-right">
-						<li class="dropdown" id="select-gamepad">
-							<a href="#select-gamepad" class="dropdown-toggle" data-toggle="dropdown">
-								Select gamepad
-								<b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#" id="select-xbox">xBox 360</a></li>
-								<li><a href="#" id="select-ps3">PS3</a></li>
-							</ul>
-						</li>
-					</ul>
 				</div>
 			</div>
 		</div>
 
 		<div class="container">
 			<section class="controller hero-unit">
+				<div id="controllerDisconnected">
+					<h1>Connect a gamepad</h1>
+					<p>Connect an xBox or PS3 gamepad and you will see a visual representation right here of every joystick movement and button press.</p>
+					<p>Make sure that you're using the <a href="http://hacks.mozilla.org/2011/12/paving-the-way-for-open-games-on-the-web-with-the-gamepad-and-mouse-lock-apis/">right version of Firefox</a> and have installed any necessary drivers for your gamepad and OS combination.</p>
+				</div>
+
 				<ul id="xboxController">
-					<li id="leftStick" class="stick"><span></span></li>
-					<li id="rightStick" class="stick"><span></span></li>
-					<li id="backButton" class="button"></li>
-					<li id="xboxButton" class="button"></li>
-					<li id="startButton" class="button"></li>
+					<li id="xBoxLeftStick" class="stick"><span></span></li>
+					<li id="xBoxRightStick" class="stick"><span></span></li>
+					<li id="xBoxBackButton" class="button"></li>
+					<li id="xBoxHomeButton" class="button"></li>
+					<li id="xBoxStartButton" class="button"></li>
 					<ul id="dpad">
-						<li id="dpadUp" class="button"></li>
-						<li id="dpadDown" class="button"></li>
-						<li id="dpadLeft" class="button"></li>
-						<li id="dpadRight" class="button"></li>
+						<li id="xBoxDpadUp" class="button"></li>
+						<li id="xBoxDpadDown" class="button"></li>
+						<li id="xBoxDpadLeft" class="button"></li>
+						<li id="xBoxDpadRight" class="button"></li>
 					</ul>
 					<ul id="letterButtons">
-						<li id="aButton" class="button">A</li>
-						<li id="bButton" class="button">B</li>
-						<li id="xButton" class="button">X</li>
-						<li id="yButton" class="button">Y</li>
+						<li id="xBoxAButton" class="button">A</li>
+						<li id="xBoxBButton" class="button">B</li>
+						<li id="xBoxXButton" class="button">X</li>
+						<li id="xBoxYButton" class="button">Y</li>
 					</ul>
-					<li id="lbButton" class="button"></li>
-					<li id="rbButton" class="button"></li>
+					<li id="xBoxLbButton" class="button"></li>
+					<li id="xBoxRbButton" class="button"></li>
 				</ul>
 
 				<ul id="ps3Controller">
-					<li id="leftStick" class="stick"><span></span></li>
-					<li id="rightStick" class="stick"><span></span></li>
-					<li id="selectButton" class="button"></li>
-					<li id="psButton" class="button"></li>
-					<li id="startButton" class="button"></li>
+					<li id="PS3LeftStick" class="stick"><span></span></li>
+					<li id="PS3RightStick" class="stick"><span></span></li>
+					<li id="PS3SelectButton" class="button"></li>
+					<li id="PS3HomeButton" class="button"></li>
+					<li id="PS3StartButton" class="button"></li>
 					<ul id="dpad">
-						<li id="dpadUp" class="button"></li>
-						<li id="dpadDown" class="button"></li>
-						<li id="dpadLeft" class="button horizontal"></li>
-						<li id="dpadRight" class="button horizontal"></li>
+						<li id="PS3DpadUp" class="button"></li>
+						<li id="PS3DpadDown" class="button"></li>
+						<li id="PS3DpadLeft" class="button horizontal"></li>
+						<li id="PS3DpadRight" class="button horizontal"></li>
 					</ul>
 					<ul id="shapeButtons">
-						<li id="crossButton" class="button">Cross</li>
-						<li id="circleButton" class="button">Circle</li>
-						<li id="squareButton" class="button">Square</li>
-						<li id="triangleButton" class="button">Triangle</li>
+						<li id="PS3CrossButton" class="button">Cross</li>
+						<li id="PS3CircleButton" class="button">Circle</li>
+						<li id="PS3SquareButton" class="button">Square</li>
+						<li id="PS3TriangleButton" class="button">Triangle</li>
 					</ul>
-					<li id="lb1Button" class="button"></li>
-					<li id="rb1Button" class="button"></li>
+					<li id="PS3Lb1Button" class="button"></li>
+					<li id="PS3Rb1Button" class="button"></li>
 				</ul>
 			</section>
 
@@ -96,7 +90,9 @@
 						<li>Requires a custom build of Firefox</li>
 						<li>No support for Chrome</li>
 						<li>Only works with xBox 360 and PS3 gamepads</li>
+						<li>Some hidden shoulder buttons and triggers are missing</li>
 						<li>No automated discovery of gamepad type</li>
+						<li>Potential quirks with the same controller on a different OS</li>
 					<ul>
 				</section>
 				<section class="span4">

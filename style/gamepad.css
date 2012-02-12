@@ -8,6 +8,10 @@ hr {
 	border-bottom-color: #eee;
 }
 
+#controllerDisconnected p {
+	margin: 20px 0;
+}
+
 .controller {
 	background-color: #ddd;
 }
@@ -19,6 +23,7 @@ hr {
 #xboxController {
 	background: url("controllers/xbox.svg") no-repeat;
 	background-size: contain;
+	display: none;
 	height: 462px;
 	margin: 0 auto;
 	position: relative;
@@ -29,12 +34,12 @@ hr {
 		
 	}
 
-		#xboxController #leftStick {
+		#xboxController #xBoxLeftStick {
 			left: 133px;
 			top: 126px;
 		}
 
-		#xboxController #rightStick {
+		#xboxController #xBoxRightStick {
 			left: 430px;
 			top: 249px;
 		}
@@ -64,7 +69,7 @@ hr {
 			background: #222;
 		}
 
-		#xboxController #backButton {
+		#xboxController #xBoxBackButton {
 			border-radius: 13px;
 			height: 26px;
 			left: 263px;
@@ -73,7 +78,7 @@ hr {
 			width: 32px;
 		}
 
-		#xboxController #xboxButton {
+		#xboxController #xBoxHomeButton {
 			border-radius: 40px;
 			height: 70px;
 			left: 335px;
@@ -82,7 +87,7 @@ hr {
 			width: 70px;
 		}
 
-		#xboxController #startButton {
+		#xboxController #xBoxStartButton {
 			border-radius: 13px;
 			height: 26px;
 			left: 407px;
@@ -115,22 +120,22 @@ hr {
 					background-color: #222;
 				}
 
-			#xboxController #dpadUp {
+			#xboxController #xBoxDpadUp {
 				left: 53px;
 				top: 15px;
 			}
 
-			#xboxController #dpadDown {
+			#xboxController #xBoxDpadDown {
 				left: 53px;
 				top: 91px;
 			}
 
-			#xboxController #dpadLeft {
+			#xboxController #xBoxDpadLeft {
 				left: 15px;
 				top: 54px;
 			}
 
-			#xboxController #dpadRight {
+			#xboxController #xBoxDpadRight {
 				left: 91px;
 				top: 54px;
 			}
@@ -157,44 +162,44 @@ hr {
 				width: 46px;
 			}
 
-			#xboxController #letterButtons #aButton {
+			#xboxController #letterButtons #xBoxAButton {
 				left: 76px;
 				top: 129px;
 			}
 
-			#xboxController #letterButtons #bButton {
+			#xboxController #letterButtons #xBoxBButton {
 				left: 129px;
 				top: 76px;
 			}
 
-			#xboxController #letterButtons #xButton {
+			#xboxController #letterButtons #xBoxXButton {
 				left: 23px;
 				top: 76px;
 			}
 
-			#xboxController #letterButtons #yButton {
+			#xboxController #letterButtons #xBoxYButton {
 				left: 76px;
 				top: 23px;
 			}
 
-		#xboxController #lbButton, #xboxController #rbButton {
+		#xboxController #xBoxLbButton, #xboxController #xBoxRbButton {
 			background-color: transparent;
 			height: 45px;
 			margin: -22px 0 0 -59px;
 			width: 125px;
 		}
 				
-			#xboxController #lbButton.pressed, #xboxController #rbButton.pressed {
+			#xboxController #xBoxLbButton.pressed, #xboxController #xBoxRbButton.pressed {
 				background-color: #222;
 			}
 
-			#xboxController #lbButton {
+			#xboxController #xBoxLbButton {
 				left: 137px;
 				mask: url("controllers/xboxmask.svg#lbMask");
 				top: 25px;
 			}
 
-			#xboxController #rbButton {
+			#xboxController #xBoxRbButton {
 				left: 528px;
 				mask: url("controllers/xboxmask.svg#rbMask");
 				top: 25px;
@@ -214,12 +219,12 @@ hr {
 		
 	}
 
-		#ps3Controller #leftStick {
+		#ps3Controller #PS3LeftStick {
 			left: 238px;
 			top: 256px;
 		}
 
-		#ps3Controller #rightStick {
+		#ps3Controller #PS3RightStick {
 			left: 431px;
 			top: 256px;
 		}
@@ -249,7 +254,7 @@ hr {
 			background: #222;
 		}
 
-		#ps3Controller #selectButton {
+		#ps3Controller #PS3SelectButton {
 			border-radius: 3px;
 			height: 18px;
 			left: 274px;
@@ -258,7 +263,7 @@ hr {
 			width: 32px;
 		}
 
-		#ps3Controller #psButton {
+		#ps3Controller #PS3HomeButton {
 			border-radius: 22px;
 			height: 44px;
 			left: 338px;
@@ -267,7 +272,7 @@ hr {
 			width: 44px;
 		}
 
-		#ps3Controller #startButton {
+		#ps3Controller #PS3StartButton {
 			height: 18px;
 			left: 398px;
 			margin: -9px 0 0 -14px;
@@ -297,25 +302,25 @@ hr {
 					width: 36px;
 				}
 
-			#ps3Controller #dpadUp {
+			#ps3Controller #PS3DpadUp {
 				left: 52px;
 				mask: url("controllers/ps3mask.svg#dpadUpMask");
 				top: 18px;
 			}
 
-			#ps3Controller #dpadDown {
+			#ps3Controller #PS3DpadDown {
 				left: 52px;
 				mask: url("controllers/ps3mask.svg#dpadDownMask");
 				top: 86px;
 			}
 
-			#ps3Controller #dpadLeft {
+			#ps3Controller #PS3DpadLeft {
 				left: 18px;
 				mask: url("controllers/ps3mask.svg#dpadLeftMask");
 				top: 52px;
 			}
 
-			#ps3Controller #dpadRight {
+			#ps3Controller #PS3DpadRight {
 				left: 86px;
 				mask: url("controllers/ps3mask.svg#dpadRightMask");
 				top: 52px;
@@ -340,49 +345,49 @@ hr {
 				width: 46px;
 			}
 
-			#ps3Controller #shapeButtons #crossButton {
+			#ps3Controller #shapeButtons #PS3CrossButton {
 				background-image: url("controllers/ps3-cross.png");
 				left: 71px;
 				top: 119px;
 			}
 
-			#ps3Controller #shapeButtons #circleButton {
+			#ps3Controller #shapeButtons #PS3CircleButton {
 				background-image: url("controllers/ps3-circle.png");
 				left: 119px;
 				top: 71px;
 			}
 
-			#ps3Controller #shapeButtons #squareButton {
+			#ps3Controller #shapeButtons #PS3SquareButton {
 				background-image: url("controllers/ps3-square.png");
 				left: 23px;
 				top: 71px;
 			}
 
-			#ps3Controller #shapeButtons #triangleButton {
+			#ps3Controller #shapeButtons #PS3TriangleButton {
 				background-image: url("controllers/ps3-triangle.png");
 				background-position: center 7px;
 				left: 71px;
 				top: 23px;
 			}
 
-		#ps3Controller #lb1Button, #ps3Controller #rb1Button {
+		#ps3Controller #PS3Lb1Button, #ps3Controller #PS3Rb1Button {
 			background-color: transparent;
 			height: 15px;
 			margin: -7px 0 0 -39px;
 			width: 79px;
 		}
 				
-			#ps3Controller #lb1Button.pressed, #ps3Controller #rb1Button.pressed {
+			#ps3Controller #PS3Lb1Button.pressed, #ps3Controller #PS3Rb1Button.pressed {
 				background-color: #222;
 			}
 
-			#ps3Controller #lb1Button {
+			#ps3Controller #PS3Lb1Button {
 				left: 138px;
 				mask: url("controllers/ps3mask.svg#lb1Mask");
 				top: 9px;
 			}
 
-			#ps3Controller #rb1Button {
+			#ps3Controller #PS3Rb1Button {
 				left: 529px;
 				mask: url("controllers/ps3mask.svg#rb1Mask");
 				top: 9px;
