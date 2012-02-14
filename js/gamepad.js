@@ -88,11 +88,35 @@ var controller,
 	controllerXbox = document.getElementById("xboxController"),
 	controllerPS3 = document.getElementById("ps3Controller"),
 	controllerChangeXbox = document.getElementById("select-xbox"),
-	controllerChangePS3 = document.getElementById("select-ps3");
+	controllerChangePS3 = document.getElementById("select-ps3"),
+
+  requestAnimFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame,
+  isChrome = navigator.webkitGamepads !== undefined;
+
+  buttonToDomMap = {};
+
+var CHROME_STANDARD_BUTTONS = {
+  0: [ aButton, crossButton ],
+  1: [ bButton, circleButton ],
+  2: [ xButton, squareButton ],
+  3: [ yButton, triangleButton ],
+  4: [ lbButton, lb1Button ],
+  5: [ rbButton, rb1Button ],
+  8: [ backButton, selectButton ],
+  9: [ startButton, startButton ],
+  10: [ leftStick, leftStick ],
+  11: [ rightStick, rightStick ],
+  12: [ dpadUp, dpadUp ],
+  13: [ dpadDown, dpadDown ],
+  14: [ dpadLeft, dpadLeft ],
+  15: [ dpadRight, dpadRight ],
+  16: [ xboxButton, psButton ],
+};
 
 // Listen for gamepad connection and disconnection
 window.addEventListener("MozGamepadConnected", onGamepadConnected);
 window.addEventListener("MozGamepadDisconnected", onGamepadDisconnected);
+if (isChrome) updateController();
 
 // Listen for controller change events
 controllerChangeXbox.addEventListener("click", onSelectXbox);
@@ -145,18 +169,104 @@ function onGamepadDisconnected(e) {
 
 // Generic controller update check
 function updateController() {
-	// Start controller checks
-	switch (controllerType) {
-		case CONTROLLER_TYPES.XBOX:
-			updateXboxController();
-			break;
-		case CONTROLLER_TYPES.PS3:
-			updatePS3Controller();
-			break;
-	}
+  if (isChrome) {
+    controller = navigator.webkitGamepads[0];
+  }
+  if (controller) {
+    // Start controller checks
+    switch (controllerType) {
+      case CONTROLLER_TYPES.XBOX:
+        updateXboxController();
+        break;
+      case CONTROLLER_TYPES.PS3:
+        updatePS3Controller();
+        break;
+    }
+  }
 
 	// Next controller check
-	window.mozRequestAnimationFrame(updateController);
+  requestAnimFrame(updateController);
+}
+
+function getDomElementForButton(controllerType, i) {
+  if (isChrome) {
+    if (CHROME_STANDARD_BUTTONS[i]) {
+      return CHROME_STANDARD_BUTTONS[i][controllerType];
+    }
+  }
+
+  // else FF
+  if (controllerType == CONTROLLER_TYPES.XBOX) {
+    switch (i) {
+      case XBOX_BUTTONS.A:
+        return aButton;
+      case XBOX_BUTTONS.B:
+        return bButton;
+      case XBOX_BUTTONS.X:
+        return xButton;
+      case XBOX_BUTTONS.Y:
+        return yButton;
+      case XBOX_BUTTONS.LB:
+        return lbButton;
+      case XBOX_BUTTONS.RB:
+        return rbButton;
+      case XBOX_BUTTONS.LEFT_STICK:
+        return leftStick;
+      case XBOX_BUTTONS.RIGHT_STICK:
+        return rightStick;
+      case XBOX_BUTTONS.START:
+        return startButton;
+      case XBOX_BUTTONS.BACK:
+        return backButton;
+      case XBOX_BUTTONS.XBOX:
+        return xboxButton;
+      case XBOX_BUTTONS.DPAD_UP:
+        return dpadUp;
+      case XBOX_BUTTONS.DPAD_DOWN:
+        return dpadDown;
+      case XBOX_BUTTONS.DPAD_LEFT:
+        return dpadLeft;
+        dpadLeft.classList.add("pressed");
+      case XBOX_BUTTONS.DPAD_RIGHT:
+        return dpadRight;
+    }
+  } else if (controllerType == CONTROLLER_TYPES.PS3) {
+		switch (i) {
+			case PS3_BUTTONS.CROSS:
+				return crossButton;
+			case PS3_BUTTONS.CIRCLE:
+				return circleButton;
+			case PS3_BUTTONS.SQUARE:
+				return squareButton;
+			case PS3_BUTTONS.TRIANGLE:
+				return triangleButton;
+			case PS3_BUTTONS.LB1:
+				return lb1Button;
+			case PS3_BUTTONS.RB1:
+				return rb1Button;
+			case PS3_BUTTONS.LEFT_STICK:
+				return leftStick;
+			case PS3_BUTTONS.RIGHT_STICK:
+				return rightStick;
+			case PS3_BUTTONS.START:
+				return startButton;
+			case PS3_BUTTONS.SELECT:
+				return selectButton;
+			case PS3_BUTTONS.PS:
+				return psButton;
+			case PS3_BUTTONS.DPAD_UP:
+				return dpadUp;
+			case PS3_BUTTONS.DPAD_DOWN:
+				return dpadDown;
+			case PS3_BUTTONS.DPAD_LEFT:
+				return dpadLeft;
+			case PS3_BUTTONS.DPAD_RIGHT:
+				return dpadRight;
+		}
+  }
+  else {
+    console.log("unhandled case!");
+  }
 }
 
 // Update xBox controller
@@ -184,53 +294,8 @@ function updateXboxController() {
 			continue;
 		}
 
-		switch (i) {
-			case XBOX_BUTTONS.A:
-				aButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.B:
-				bButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.X:
-				xButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.Y:
-				yButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.LB:
-				lbButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.RB:
-				rbButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.LEFT_STICK:
-				leftStick.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.RIGHT_STICK:
-				rightStick.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.START:
-				startButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.BACK:
-				backButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.XBOX:
-				xboxButton.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.DPAD_UP:
-				dpadUp.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.DPAD_DOWN:
-				dpadDown.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.DPAD_LEFT:
-				dpadLeft.classList.add("pressed");
-				break;
-			case XBOX_BUTTONS.DPAD_RIGHT:
-				dpadRight.classList.add("pressed");
-				break;
-		}
+    var dom = getDomElementForButton(controllerType, i);
+    if (dom) dom.classList.add("pressed");
 	}
 
 	// Axes (joysticks and triggers)
@@ -281,53 +346,8 @@ function updatePS3Controller() {
 			continue;
 		}
 
-		switch (i) {
-			case PS3_BUTTONS.CROSS:
-				crossButton.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.CIRCLE:
-				circleButton.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.SQUARE:
-				squareButton.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.TRIANGLE:
-				triangleButton.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.LB1:
-				lb1Button.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.RB1:
-				rb1Button.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.LEFT_STICK:
-				leftStick.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.RIGHT_STICK:
-				rightStick.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.START:
-				startButton.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.SELECT:
-				selectButton.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.PS:
-				psButton.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.DPAD_UP:
-				dpadUp.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.DPAD_DOWN:
-				dpadDown.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.DPAD_LEFT:
-				dpadLeft.classList.add("pressed");
-				break;
-			case PS3_BUTTONS.DPAD_RIGHT:
-				dpadRight.classList.add("pressed");
-				break;
-		}
+    var dom = getDomElementForButton(controllerType, i);
+    if (dom) dom.classList.add("pressed");
 	}
 
 	// Axes (joysticks and triggers)
