@@ -93,8 +93,6 @@ var controller,
   requestAnimFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame,
   isChrome = navigator.webkitGamepads !== undefined;
 
-  buttonToDomMap = {};
-
 var CHROME_STANDARD_BUTTONS = {
   0: [ aButton, crossButton ],
   1: [ bButton, circleButton ],
