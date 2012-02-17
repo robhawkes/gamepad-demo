@@ -1,15 +1,14 @@
 var CONTROLLER_TYPES = {
 	XBOX: 0,
-	PS3: 1
+	PS3: 1,
+	LOGITECH: 2
 };
 
 var XBOX_AXES = {
 	LEFT_STICK_X: 0,
 	LEFT_STICK_Y: 1,
 	RIGHT_STICK_X: 2,
-	RIGHT_STICK_Y: 3,
-	LEFT_TRIGGER: 4,
-	RIGHT_TRIGGER: 5
+	RIGHT_STICK_Y: 3
 };
 
 var XBOX_BUTTONS = {
@@ -24,6 +23,38 @@ var XBOX_BUTTONS = {
 	START: 8,
 	BACK: 9,
 	HOME: 10,
+	DPAD_UP: 11,
+	DPAD_DOWN: 12,
+	DPAD_LEFT: 13,
+	DPAD_RIGHT: 14
+};
+
+var LOGITECH_AXES = {
+	LEFT_STICK_X: 1,
+	LEFT_STICK_Y: 2,
+	RIGHT_STICK_X: 3,
+	RIGHT_STICK_Y: 4
+};
+
+var LOGITECH_AXES_CHROME = {
+	LEFT_STICK_X: 0,
+	LEFT_STICK_Y: 1,
+	RIGHT_STICK_X: 2,
+	RIGHT_STICK_Y: 5
+};
+
+var LOGITECH_BUTTONS = {
+	A: 1,
+	B: 2,
+	X: 0,
+	Y: 3,
+	LB: 4,
+	RB: 5,
+	LEFT_STICK: 10,
+	RIGHT_STICK: 11,
+	START: 9,
+	BACK: 8,
+	//HOME: 10,
 	DPAD_UP: 11,
 	DPAD_DOWN: 12,
 	DPAD_LEFT: 13,
@@ -53,6 +84,24 @@ var PS3_BUTTONS = {
 	DPAD_DOWN: 6,
 	DPAD_LEFT: 7,
 	DPAD_RIGHT: 5
+};
+
+var PS3_BUTTONS_CHROME = {
+	CROSS: 0,
+	CIRCLE: 1,
+	SQUARE: 2,
+	TRIANGLE: 3,
+	LB1: 4,
+	RB1: 5,
+	LEFT_STICK: 10,
+	RIGHT_STICK: 11,
+	START: 9,
+	SELECT: 8,
+	HOME: 16,
+	DPAD_UP: 12,
+	DPAD_DOWN: 13,
+	DPAD_LEFT: 14,
+	DPAD_RIGHT: 15
 };
 
 var controller,
@@ -91,14 +140,40 @@ var controller,
 	PS3Lb1Button = document.getElementById("PS3Lb1Button"),
 	PS3Rb1Button = document.getElementById("PS3Rb1Button"),
 
+	// Logitech controls
+	logitechLeftStick = document.getElementById("xBoxLeftStick"),
+	logitechRightStick = document.getElementById("xBoxRightStick"),
+	logitechBackButton = document.getElementById("xBoxBackButton"),
+	logitechHomeButton = document.getElementById("xBoxHomeButton"),
+	logitechStartButton = document.getElementById("xBoxStartButton"),
+	logitechDpadUp = document.getElementById("xBoxDpadUp"),
+	logitechDpadDown = document.getElementById("xBoxDpadDown"),
+	logitechDpadLeft = document.getElementById("xBoxDpadLeft"),
+	logitechDpadRight = document.getElementById("xBoxDpadRight"),
+	logitechAButton = document.getElementById("xBoxAButton"),
+	logitechBButton = document.getElementById("xBoxBButton"),
+	logitechXButton = document.getElementById("xBoxXButton"),
+	logitechYButton = document.getElementById("xBoxYButton"),
+	logitechLbButton = document.getElementById("xBoxLbButton"),
+	logitechRbButton = document.getElementById("xBoxRbButton"),
+
 	// Controller change stuff
 	controllerDisconnected = document.getElementById("controllerDisconnected"),
 	controllerXbox = document.getElementById("xboxController"),
-	controllerPS3 = document.getElementById("ps3Controller");
+	controllerPS3 = document.getElementById("ps3Controller"),
 
-// Listen for gamepad connection and disconnection
-window.addEventListener("MozGamepadConnected", onGamepadConnected);
-window.addEventListener("MozGamepadDisconnected", onGamepadDisconnected);
+	// RAF and Chrome stuff
+	requestAnimFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame,
+	isChrome = navigator.webkitGamepads !== undefined;
+
+// Skip to RAF if using Chrome, otherwise assume Firefox
+if (isChrome) {
+	updateController();
+} else {
+	// Listen for gamepad connection and disconnection
+	window.addEventListener("MozGamepadConnected", onGamepadConnected);
+	window.addEventListener("MozGamepadDisconnected", onGamepadDisconnected);
+}
 
 // Run When a gamepad is connected
 function onGamepadConnected(e) {
@@ -108,35 +183,48 @@ function onGamepadConnected(e) {
 
 	console.log("Gamepad connected", controller.id);
 
-	// // Buttons
-	// for (i = 0; i < controller.buttons.length; i++) {
-	// 	console.log(controller.buttons[i]);
-	// };
-
-	// // Axes (joysticks)
-	// for (i = 0; i < controller.axes.length; i++) {
-	// 	console.log(controller.axes[i]);
-	// };
-
-	// Work out and set controler type
-	switch (controller.id) {
-		case "54c-268-PLAYSTATION(R)3 Controller":
-			controllerType = CONTROLLER_TYPES.PS3;
-			controllerXbox.style.display = "none";
-			controllerPS3.style.display = "block";
-			break;
-	}
-
-	// Hide disconnection message and show relevant controller
-	controllerDisconnected.style.display = "none";
+	// Detect and connect gamepad
+	detectAndConnect(controller.id);
 
 	// Start controller checks
 	updateController();
 }
 
+function detectAndConnect(id) {
+	if (id.search("PLAYSTATION(R)3") >= 0) {
+		if (controllerType === CONTROLLER_TYPES.PS3) {
+			return;
+		}
+
+		controllerType = CONTROLLER_TYPES.PS3;
+		controllerXbox.style.display = "none";
+		controllerPS3.style.display = "block";
+	} else if (id.search("Logitech Rumblepad 2") >= 0) {
+		if (controllerType === CONTROLLER_TYPES.LOGITECH) {
+			return;
+		}
+
+		controllerType = CONTROLLER_TYPES.LOGITECH;
+		controllerXbox.style.display = "block";
+		controllerPS3.style.display = "none";
+	}
+
+	// Hide disconnection message and show relevant controller
+	if (controllerType !== "undefined") {
+		controllerDisconnected.style.display = "none";
+	}
+}
+
 // Run When a gamepad is disconnected
 function onGamepadDisconnected(e) {
 	console.log("Gamepad disconnected", controller.id);
+
+	disconnect();
+}
+
+function disconnect() {
+	controller = null;
+	controllerType = null;
 
 	// Hide controller visualisations
 	controllerXbox.style.display = "none";
@@ -148,6 +236,28 @@ function onGamepadDisconnected(e) {
 
 // Generic controller update check
 function updateController() {
+	// Detect and connect controller if using Chrome
+	if (isChrome) {
+		var chromeController = navigator.webkitGamepads[0];
+
+		if (!controller) {
+			controller = chromeController;
+		}
+
+		if (!chromeController) {
+			// Disconnect previous controllers
+			if (controller) {
+				disconnect();
+			}
+
+			// Skip to next controller check
+			requestAnimFrame(updateController);
+			return;
+		}
+
+		detectAndConnect(chromeController.id);
+	}
+
 	// Start controller checks
 	switch (controllerType) {
 		case CONTROLLER_TYPES.XBOX:
@@ -156,10 +266,13 @@ function updateController() {
 		case CONTROLLER_TYPES.PS3:
 			updatePS3Controller();
 			break;
+		case CONTROLLER_TYPES.LOGITECH:
+			updateLogitechController();
+			break;
 	}
 
 	// Next controller check
-	window.mozRequestAnimationFrame(updateController);
+	requestAnimFrame(updateController);
 }
 
 // Update xBox controller
@@ -251,10 +364,6 @@ function updateXboxController() {
 			case XBOX_AXES.RIGHT_STICK_Y:
 				xBoxRightStick.getElementsByTagName("span")[0].style.top = (controller.axes[i]*20).toString()+"px";
 				break;
-			case XBOX_AXES.LEFT_TRIGGER:
-				break;
-			case XBOX_AXES.RIGHT_TRIGGER:
-				break;
 		}
 	}
 }
@@ -263,7 +372,14 @@ function updateXboxController() {
 function updatePS3Controller() {
 	var i, j,
 		buttonsDom,
-		sticksDom;
+		sticksDom,
+		buttons;
+
+	if (isChrome) {
+		buttons = PS3_BUTTONS_CHROME;
+	} else {
+		buttons = PS3_BUTTONS;
+	}
 
 	// Clear button pressed styles
 	buttonsDom = document.getElementsByClassName("button");
@@ -285,49 +401,49 @@ function updatePS3Controller() {
 		}
 
 		switch (i) {
-			case PS3_BUTTONS.CROSS:
+			case buttons.CROSS:
 				PS3CrossButton.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.CIRCLE:
+			case buttons.CIRCLE:
 				PS3CircleButton.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.SQUARE:
+			case buttons.SQUARE:
 				PS3SquareButton.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.TRIANGLE:
+			case buttons.TRIANGLE:
 				PS3TriangleButton.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.LB1:
+			case buttons.LB1:
 				PS3Lb1Button.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.RB1:
+			case buttons.RB1:
 				PS3Rb1Button.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.LEFT_STICK:
+			case buttons.LEFT_STICK:
 				PS3LeftStick.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.RIGHT_STICK:
+			case buttons.RIGHT_STICK:
 				PS3RightStick.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.START:
+			case buttons.START:
 				PS3StartButton.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.SELECT:
+			case buttons.SELECT:
 				PS3SelectButton.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.HOME:
+			case buttons.HOME:
 				PS3HomeButton.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.DPAD_UP:
+			case buttons.DPAD_UP:
 				PS3DpadUp.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.DPAD_DOWN:
+			case buttons.DPAD_DOWN:
 				PS3DpadDown.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.DPAD_LEFT:
+			case buttons.DPAD_LEFT:
 				PS3DpadLeft.classList.add("pressed");
 				break;
-			case PS3_BUTTONS.DPAD_RIGHT:
+			case buttons.DPAD_RIGHT:
 				PS3DpadRight.classList.add("pressed");
 				break;
 		}
@@ -347,6 +463,106 @@ function updatePS3Controller() {
 				break;
 			case PS3_AXES.RIGHT_STICK_Y:
 				PS3RightStick.getElementsByTagName("span")[0].style.top = (controller.axes[i]*25).toString()+"px";
+				break;
+		}
+	}
+}
+
+// Update Logitech controller
+function updateLogitechController() {
+	var i, j,
+		buttonsDom,
+		sticksDom,
+		axes;
+
+	// Clear button pressed styles
+	buttonsDom = document.getElementsByClassName("button");
+	for (j = 0; j < buttonsDom.length; j++) {
+		buttonsDom[j].classList.remove("pressed");
+	}
+
+	// Clear stick pressed styles
+	sticksDom = document.getElementsByClassName("stick");
+	for (j = 0; j < sticksDom.length; j++) {
+		sticksDom[j].classList.remove("pressed");
+	}
+
+	// Buttons
+	for (i = 0; i < controller.buttons.length; i++) {
+		// Only continue if button is pressed
+		if (!controller.buttons[i]) {
+			continue;
+		}
+
+		switch (i) {
+			case LOGITECH_BUTTONS.A:
+				xBoxAButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.B:
+				xBoxBButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.X:
+				xBoxXButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.Y:
+				xBoxYButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.LB:
+				xBoxLbButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.RB:
+				xBoxRbButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.LEFT_STICK:
+				xBoxLeftStick.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.RIGHT_STICK:
+				xBoxRightStick.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.START:
+				xBoxStartButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.BACK:
+				xBoxBackButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.HOME:
+				xBoxHomeButton.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.DPAD_UP:
+				xBoxDpadUp.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.DPAD_DOWN:
+				xBoxDpadDown.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.DPAD_LEFT:
+				xBoxDpadLeft.classList.add("pressed");
+				break;
+			case LOGITECH_BUTTONS.DPAD_RIGHT:
+				xBoxDpadRight.classList.add("pressed");
+				break;
+		}
+	}
+
+	if (isChrome) {
+		axes = LOGITECH_AXES_CHROME;
+	} else {
+		axes = LOGITECH_AXES;
+	}
+
+	// Axes (joysticks and triggers)
+	for (i = 0; i < controller.axes.length; i++) {
+		switch (i) {
+			case axes.LEFT_STICK_X:
+				xBoxLeftStick.getElementsByTagName("span")[0].style.left = (controller.axes[i]*20).toString()+"px";
+				break;
+			case axes.LEFT_STICK_Y:
+				xBoxLeftStick.getElementsByTagName("span")[0].style.top = (controller.axes[i]*20).toString()+"px";
+				break;
+			case axes.RIGHT_STICK_X:
+				xBoxRightStick.getElementsByTagName("span")[0].style.left = (controller.axes[i]*20).toString()+"px";
+				break;
+			case axes.RIGHT_STICK_Y:
+				xBoxRightStick.getElementsByTagName("span")[0].style.top = (controller.axes[i]*20).toString()+"px";
 				break;
 		}
 	}

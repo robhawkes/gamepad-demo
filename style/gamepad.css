@@ -1,6 +1,6 @@
 body {
 	background: #eee;
-	padding-top: 60px;
+	padding: 60px 0 40px;
 }
 
 hr {
@@ -18,6 +18,10 @@ hr {
 
 	.controller li {
 		position: absolute;
+	}
+
+	.stick {
+		list-style: none;
 	}
 
 #xboxController {
