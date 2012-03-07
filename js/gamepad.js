@@ -191,7 +191,7 @@ function onGamepadConnected(e) {
 }
 
 function detectAndConnect(id) {
-	if (id.search("PLAYSTATION(R)3") >= 0) {
+	if (id.search("PLAYSTATION") >= 0) {
 		if (controllerType === CONTROLLER_TYPES.PS3) {
 			return;
 		}
