@@ -207,6 +207,14 @@ function detectAndConnect(id) {
 		controllerType = CONTROLLER_TYPES.LOGITECH;
 		controllerXbox.style.display = "block";
 		controllerPS3.style.display = "none";
+	} else if(id.search("Xbox 360 Controller") >= 0) {
+		if (controllerType === CONTROLLER_TYPES.XBOX) {
+			return;
+		}
+
+		controllerType = CONTROLLER_TYPES.XBOX;
+		controllerXbox.style.display = "block";
+		controllerPS3.style.display = "none";
 	}
 
 	// Hide disconnection message and show relevant controller
