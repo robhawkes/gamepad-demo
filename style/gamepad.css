@@ -209,6 +209,24 @@ hr {
 				top: 25px;
 			}
 
+
+		#xboxController #xBoxLtButton, #xboxController #xBoxRtButton {
+			background-color: transparent;
+			height: 35px;
+			margin: -22px 0 0 -59px;
+			width: 125px;
+			left: 130px;
+			top: 0;
+		}
+		#xboxController #xBoxRtButton {
+			left: 536px;
+		}
+		#xboxController #xBoxLtButton.pressed, #xboxController #xBoxRtButton.pressed {
+			background-color: #222;
+		}
+
+
+
 #ps3Controller {
 	background: url("controllers/ps3.svg") no-repeat;
 	background-size: contain;
