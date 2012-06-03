@@ -199,7 +199,7 @@ function detectAndConnect(id) {
 		controllerType = CONTROLLER_TYPES.PS3;
 		controllerXbox.style.display = "none";
 		controllerPS3.style.display = "block";
-	} else if (id.search("Logitech Rumblepad 2") >= 0) {
+	} else if (id.search("Logitech Rumblepad 2") >= 0 || id.search("Logitech Dual Action") >= 0) {
 		if (controllerType === CONTROLLER_TYPES.LOGITECH) {
 			return;
 		}
