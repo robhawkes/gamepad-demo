@@ -171,8 +171,8 @@ if (isChrome) {
 	updateController();
 } else {
 	// Listen for gamepad connection and disconnection
-	window.addEventListener("MozGamepadConnected", onGamepadConnected);
-	window.addEventListener("MozGamepadDisconnected", onGamepadDisconnected);
+	window.addEventListener("gamepadconnected", onGamepadConnected);
+	window.addEventListener("gamepaddisconnected", onGamepadDisconnected);
 }
 
 // Run When a gamepad is connected
