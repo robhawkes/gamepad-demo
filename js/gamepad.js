@@ -18,15 +18,16 @@ var XBOX_BUTTONS = {
 	Y: 3,
 	LB: 4,
 	RB: 5,
-	LEFT_STICK: 6,
-	RIGHT_STICK: 7,
-	START: 8,
-	BACK: 9,
-	HOME: 10,
-	DPAD_UP: 11,
-	DPAD_DOWN: 12,
-	DPAD_LEFT: 13,
-	DPAD_RIGHT: 14
+	LEFT_TRIGGER: 6,
+	RIGHT_TRIGGER: 7,
+	LEFT_STICK: 10,
+	RIGHT_STICK: 11,
+	START: 9,
+	BACK: 8,
+	DPAD_UP: 12,
+	DPAD_DOWN: 13,
+	DPAD_LEFT: 14,
+	DPAD_RIGHT: 15
 };
 
 var LOGITECH_AXES = {
@@ -122,6 +123,8 @@ var controller,
 	xBoxYButton = document.getElementById("xBoxYButton"),
 	xBoxLbButton = document.getElementById("xBoxLbButton"),
 	xBoxRbButton = document.getElementById("xBoxRbButton"),
+	xBoxLtButton = document.getElementById("xBoxLtButton"),
+	xBoxRtButton = document.getElementById("xBoxRtButton"),
 
 	// PS3-specific controls
 	PS3LeftStick = document.getElementById("PS3LeftStick"),
@@ -205,6 +208,14 @@ function detectAndConnect(id) {
 		}
 
 		controllerType = CONTROLLER_TYPES.LOGITECH;
+		controllerXbox.style.display = "block";
+		controllerPS3.style.display = "none";
+	} else if(id.search("Xbox 360 Controller") >= 0) {
+		if (controllerType === CONTROLLER_TYPES.XBOX) {
+			return;
+		}
+
+		controllerType = CONTROLLER_TYPES.XBOX;
 		controllerXbox.style.display = "block";
 		controllerPS3.style.display = "none";
 	}
@@ -318,6 +329,12 @@ function updateXboxController() {
 				break;
 			case XBOX_BUTTONS.RB:
 				xBoxRbButton.classList.add("pressed");
+				break;
+			case XBOX_BUTTONS.LEFT_TRIGGER:
+				xBoxLtButton.classList.add("pressed");
+				break;
+			case XBOX_BUTTONS.RIGHT_TRIGGER:
+				xBoxRtButton.classList.add("pressed");
 				break;
 			case XBOX_BUTTONS.LEFT_STICK:
 				xBoxLeftStick.classList.add("pressed");
