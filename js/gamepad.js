@@ -163,16 +163,17 @@ var controller,
 	controllerPS3 = document.getElementById("ps3Controller"),
 
 	// RAF and Chrome stuff
-	requestAnimFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame,
-	isChrome = navigator.webkitGamepads !== undefined;
+	requestAnimFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame,
+	isChrome = navigator.userAgent.match(/Chrome/),
+        //TODO: this is broken in Chrome Canary (exposes GamepadEvent, but doesn't seem to work)
+        haveEvents = !isChrome; //'GamepadEvent' in window;
 
-// Skip to RAF if using Chrome, otherwise assume Firefox
-if (isChrome) {
+if (!haveEvents) {
 	updateController();
 } else {
 	// Listen for gamepad connection and disconnection
-	window.addEventListener("MozGamepadConnected", onGamepadConnected);
-	window.addEventListener("MozGamepadDisconnected", onGamepadDisconnected);
+	window.addEventListener("gamepadconnected", onGamepadConnected);
+	window.addEventListener("gamepaddisconnected", onGamepadDisconnected);
 }
 
 // Run When a gamepad is connected
@@ -207,7 +208,15 @@ function detectAndConnect(id) {
 		controllerType = CONTROLLER_TYPES.LOGITECH;
 		controllerXbox.style.display = "block";
 		controllerPS3.style.display = "none";
-	}
+	} else if (id.search("Xbox") >= 0 || id.search("X-Box") >= 0) {
+		if (controllerType === CONTROLLER_TYPES.XBOX) {
+			return;
+		}
+
+		controllerType = CONTROLLER_TYPES.XBOX;
+		controllerXbox.style.display = "block";
+		controllerPS3.style.display = "none";
+        }
 
 	// Hide disconnection message and show relevant controller
 	if (controllerType !== "undefined") {
@@ -236,15 +245,15 @@ function disconnect() {
 
 // Generic controller update check
 function updateController() {
-	// Detect and connect controller if using Chrome
-	if (isChrome) {
-		var chromeController = navigator.webkitGamepads[0];
+	// Detect and connect controller if events aren't supported
+	if (!haveEvents) {
+		var controllers = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);
 
-		if (!controller) {
-			controller = chromeController;
+		if (!controller && controllers) {
+			controller = controllers[0];
 		}
 
-		if (!chromeController) {
+		if (!controllers) {
 			// Disconnect previous controllers
 			if (controller) {
 				disconnect();
@@ -255,7 +264,8 @@ function updateController() {
 			return;
 		}
 
-		detectAndConnect(chromeController.id);
+                if (controller)
+			detectAndConnect(controller.id);
 	}
 
 	// Start controller checks
@@ -273,6 +283,13 @@ function updateController() {
 
 	// Next controller check
 	requestAnimFrame(updateController);
+}
+
+function buttonPressed(button) {
+  if (typeof(button) == "object")
+    return button.pressed;
+
+  return button > 0.5;
 }
 
 // Update xBox controller
@@ -296,7 +313,7 @@ function updateXboxController() {
 	// Buttons
 	for (i = 0; i < controller.buttons.length; i++) {
 		// Only continue if button is pressed
-		if (!controller.buttons[i]) {
+		if (!buttonPressed(controller.buttons[i])) {
 			continue;
 		}
 
@@ -396,7 +413,7 @@ function updatePS3Controller() {
 	// Buttons
 	for (i = 0; i < controller.buttons.length; i++) {
 		// Only continue if button is pressed
-		if (!controller.buttons[i]) {
+		if (!buttonPressed(controller.buttons[i])) {
 			continue;
 		}
 
@@ -490,7 +507,7 @@ function updateLogitechController() {
 	// Buttons
 	for (i = 0; i < controller.buttons.length; i++) {
 		// Only continue if button is pressed
-		if (!controller.buttons[i]) {
+		if (!buttonPressed(controller.buttons[i])) {
 			continue;
 		}
 
